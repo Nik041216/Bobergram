@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:provider/provider.dart';
 import '../models/app_settings.dart';
+import '../widgets/color_picker.dart';
 
 class CustomizeColorChat extends StatelessWidget {
   CustomizeColorChat({super.key});
@@ -9,9 +9,19 @@ class CustomizeColorChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isMe = ModalRoute.of(context)!.settings.arguments as bool;
+    final settings = Provider.of<AppSettings>(context);
+    final isDarkMode = settings.isDarkTheme;
+    Color color, colorLite;
+    if (isMe) {
+      color = settings.myBubbleColorDark;
+      colorLite = settings.myBubbleColor;
+    } else {
+      color = settings.otherMessageColorDark;
+      colorLite = settings.otherMessageColor;
+    }
 
     return DefaultTabController(
-      initialIndex: 1,
+      initialIndex: isDarkMode ? 1 : 0,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
@@ -24,10 +34,15 @@ class CustomizeColorChat extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
-            Center(child: Text("It's cloudy here")),
-            Center(child: Text("It's sunny here")),
+            Column(children: [
+              ColorPickerTile(startColor: colorLite, onColorChanged: (color) {})
+            ]),
+            Column(children: [
+              ColorPickerTile(startColor: color, onColorChanged: (color) {})
+            ]),
           ],
         ),
       ),
