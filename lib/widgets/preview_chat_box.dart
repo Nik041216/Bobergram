@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/app_settings.dart';
-import 'message_bubble.dart';
+import 'prewiew_message_bubble.dart';
 
 class PreviewChatBox extends StatelessWidget {
-  const PreviewChatBox({super.key});
+  final Color colorMe;
+  final Color colorOther;
+
+  const PreviewChatBox({
+    super.key, 
+    required this.colorOther,
+    required this.colorMe
+  });
 
   @override
   Widget build(BuildContext context) {
     final settings = Provider.of<AppSettings>(context);
 
-    final List<Map<String, dynamic>> _messages = [
+    final List<Map<String, dynamic>> messages = [
       {'text': 'Привет!', 'isMe': false},
       {'text': 'Привет, как дела?', 'isMe': true},
       {'text': 'Всё отлично, ты как?', 'isMe': false},
@@ -40,12 +47,14 @@ class PreviewChatBox extends StatelessWidget {
             child: ListView.builder(
               reverse: true,
               padding: const EdgeInsets.all(8),
-              itemCount: _messages.length,
+              itemCount: messages.length,
               itemBuilder: (context, index) {
-                final message = _messages[_messages.length - 1 - index];
-                return MessageBubble(
+                final message = messages[messages.length - 1 - index];
+                return PreviewMessageBubble(
                   text: message['text'],
                   isMe: message['isMe'],
+                  colorMe: colorMe,
+                  colorOther: colorOther,
                 );
               },
             ),

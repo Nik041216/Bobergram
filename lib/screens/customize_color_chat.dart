@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/app_settings.dart';
 import '../widgets/color_picker.dart';
+import '../widgets/expansion_panel_list.dart';
+
 
 class CustomizeColorChat extends StatelessWidget {
   CustomizeColorChat({super.key});
@@ -40,8 +42,9 @@ class CustomizeColorChat extends StatelessWidget {
             Column(children: [
               ColorPickerTile(startColor: colorLite, onColorChanged: (color) {})
             ]),
-            Column(children: [
-              ColorPickerTile(startColor: color, onColorChanged: (color) {})
+            ListView(children: [
+              ColorPickerTile(startColor: color, onColorChanged: (color) {}),
+              EditableExpansionPanelList()
             ]),
           ],
         ),

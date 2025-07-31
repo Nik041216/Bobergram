@@ -5,15 +5,22 @@ import 'package:provider/provider.dart';
 class PreviewMessageBubble extends StatelessWidget {
   final String text;
   final bool isMe;
-  final Color color;
+  final Color colorMe;
+  final Color colorOther;
 
-  const PreviewMessageBubble({super.key, required this.text, required this.isMe, required this.color});
+  const PreviewMessageBubble({
+    super.key, 
+    required this.text, 
+    required this.isMe, 
+    required this.colorMe,
+    required this.colorOther
+  });
 
   @override
   Widget build(BuildContext context) {
     final settings = Provider.of<AppSettings>(context);
     final alignment = isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start;
-    var bgColor = isMe ? color : settings.otherMessageColor;
+    var bgColor = isMe ? colorMe : colorOther;
 
 
     return Column(

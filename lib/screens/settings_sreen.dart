@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/app_settings.dart';
 import '../widgets/preview_chat_box.dart';
+import '../widgets/expansion_panel_list.dart';
 
 class SettingsSreen extends StatelessWidget {
   SettingsSreen({super.key});
@@ -50,7 +51,7 @@ class SettingsSreen extends StatelessWidget {
           ),
 
           const Text('Предпросмотр настроек чата'),
-          const PreviewChatBox(),
+          PreviewChatBox(colorMe: settings.myBubbleColor, colorOther: settings.otherMessageColor),
 
           ListTile(
             title: const Text('Фон чата'),
@@ -66,60 +67,7 @@ class SettingsSreen extends StatelessWidget {
               
             },
           ),
-
-          ListTile(
-            title: const Text('Цвет ваших сообщений'),
-            trailing: SizedBox(
-              width: 90,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: settings.myBubbleColor,
-                    radius: 15,
-                  ),
-                  CircleAvatar(
-                    backgroundColor: settings.myBubbleColorDark,
-                    radius: 15,
-                  ),
-                ],
-              ),
-            ),
-            onTap: () async {
-              Navigator.pushNamed(
-                context, 
-                '/pickColorBuble',
-                arguments: true,
-              );
-            },
-          ),
-
-          ListTile(
-            title: Text('Цвет сообщений собеседника'),
-            trailing: SizedBox(
-              width: 90,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: settings.otherMessageColor,
-                    radius: 15,
-                  ),
-                  CircleAvatar(
-                    backgroundColor: settings.otherMessageColorDark,
-                    radius: 15,
-                  ),
-                ],
-              ),
-            ),
-            onTap: () async {
-              Navigator.pushNamed(
-                context, 
-                '/pickColorBuble',
-                arguments: false,
-              );
-            },
-          ),
+          EditableExpansionPanelList(),
         ],
       ),
     );
